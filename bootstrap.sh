@@ -19,7 +19,9 @@ apt-get install -y lsb-release apt-transport-https
 if ! grep -q "https://deb.torproject.org/torproject.org" /etc/apt/sources.list; then
     echo "== Adding the official Tor repository"
     echo "deb https://deb.torproject.org/torproject.org `lsb_release -cs` main" >> /etc/apt/sources.list
-    gpg --keyserver keys.gnupg.net --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+    echo "deb-src https://deb.torproject.org/torproject.org `lsb_release -cs` main" >> /etc/apt/sources.list
+    # The following two lines are from https://2019.www.torproject.org/docs/debian.html.en
+    curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
     gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
     apt-get update
 fi
